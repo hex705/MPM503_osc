@@ -8,11 +8,11 @@ import oscP5.*;
 import netP5.*;
   
 OscP5 oscP5;  // a listener
-int myPort  = 12001;
+int listeningPort  = 12001;
 
 
 NetAddress  remoteLocation;  // someone to talk to
-int remotePort = 12000;
+int remotePort = 13000;
 
 
 void setup() {
@@ -22,7 +22,7 @@ void setup() {
   frameRate(25);
   
   /* start oscP5, listening for incoming messages at port 12000 */
-  oscP5 = new OscP5(this, myPort); // what does this remind you of ?
+  oscP5 = new OscP5(this, listeningPort); // what does this remind you of ?
   
   
   /* myRemoteLocation is a NetAddress. a NetAddress takes 2 parameters,
@@ -33,7 +33,7 @@ void setup() {
    * send messages back to this sketch.
    */
    
-  remoteLocation = new NetAddress("192.168.2.27", remotePort);  // is this familiar?
+  remoteLocation = new NetAddress("127.0.0.1",remotePort);  // is this familiar?
   
   background(0);  
   
@@ -66,8 +66,8 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  
-  OscMessage noteMessage = new OscMessage("/sam/z1");
+  println("pressed a key");
+  OscMessage noteMessage = new OscMessage("/YOURNAME/z1");
   
   switch(key) {
     
@@ -86,6 +86,9 @@ void keyPressed() {
     noteMessage.add( 1 );                               // add an int to the osc message
 
     oscP5.send(noteMessage, remoteLocation); 
+    delay(1);
+   
+
 }
   
 
